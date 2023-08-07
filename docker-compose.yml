@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  uffizzi:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - ~/.ssh:/root/.ssh
+      - ~/.bash_history:/root/.bash_history
+      - ~/.config/uffizzi:/root/.config/uffizzi
+    command: ["bash", "-c", "go run /app/cmd/uffizzi"]
