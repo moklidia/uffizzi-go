@@ -51,7 +51,7 @@ func main() {
 					Name:  "set",
 					Usage: "Sets the value of the specified option.",
 					Action: func(cCtx *cli.Context) error {
-						fmt.Println("set command called: ", cCtx.Args().First())
+						config.SetValue(cCtx.Args().Get(0), cCtx.Args().Get(1))
 						return nil
 					},
 				},

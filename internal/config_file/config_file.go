@@ -14,7 +14,7 @@ type Config struct {
 		Name string `json:"name"`
 	} `json:"account"`
 	Server    string `json:"server"`
-	project   string `json:"project"`
+	Project   string `json:"project"`
 	cookie    string `json:"cookie"`
 	oidcToken string `json:"oidc_token"`
 }
@@ -64,11 +64,10 @@ func ReadOption(option string) interface{} {
 func SetOption(option, value string) {
 	initializeConfig()
 	ConfigReader.viper.Set(option, value)
-	ConfigReader.viper.WriteConfig()
-}
-
-func UnsetOption() {
-
+	err := ConfigReader.viper.WriteConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func createConfigFile(dir, path string) error {

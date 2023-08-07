@@ -43,5 +43,15 @@ func List() {
 }
 
 func GetValue(option string) {
-	fmt.Println(configFile.ReadOption(option))
+	value := configFile.ReadOption(option)
+	if value != nil {
+		fmt.Println(value)
+	}
+	fmt.Println(fmt.Sprintf("No such option: %s", option))
+}
+
+func SetValue(option, value string) {
+	configFile.SetOption(option, value)
+
+	fmt.Println(fmt.Sprintf("The option '%s' was added with value '%s'", option, value))
 }
