@@ -13,7 +13,7 @@ type Config struct {
 		Id   string `json:"id"`
 		Name string `json:"name"`
 	} `json:"account"`
-	Server    string `json:"server"`
+	Host      string `json:"host"`
 	Project   string `json:"project"`
 	cookie    string `json:"cookie"`
 	oidcToken string `json:"oidc_token"`
@@ -23,10 +23,9 @@ type viperConfigReader struct {
 	viper *viper.Viper
 }
 
-// var ConfigReader *viperConfigReader
 var ConfigReader *viperConfigReader
 
-func initializeConfig() {
+func init() {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
@@ -41,16 +40,19 @@ func initializeConfig() {
 	v.SetConfigName("config")
 	v.SetConfigType("json")
 	v.AddConfigPath(configDir)
-	v.SetDefault("server", "https://app.uffizzi.com")
+	v.SetDefault("host", "https://app.uffizzi.com")
 	v.AllowEmptyEnv(true)
 	v.ReadInConfig()
+	err = v.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %w", err))
+	}
 	ConfigReader = &viperConfigReader{
 		viper: v,
 	}
 }
 
 func ReadConfig() Config {
-	initializeConfig()
 	var config Config
 	ConfigReader.viper.Unmarshal(&config)
 
@@ -58,12 +60,10 @@ func ReadConfig() Config {
 }
 
 func ReadOption(option string) interface{} {
-	initializeConfig()
 	return ConfigReader.viper.Get(option)
 }
 
 func SetOption(option, value string) {
-	initializeConfig()
 	ConfigReader.viper.Set(option, value)
 	err := ConfigReader.viper.WriteConfig()
 	if err != nil {
@@ -72,7 +72,6 @@ func SetOption(option, value string) {
 }
 
 func UnsetOption(option string) {
-	initializeConfig()
 	ConfigReader.viper.Set(option, "")
 	err := ConfigReader.viper.WriteConfig()
 	if err != nil {

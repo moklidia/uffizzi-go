@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	configFile "UffizziCloud/uffizzi-cli/internal/config_file"
+	configFile "UffizziCloud/uffizzi-go/internal/config_file"
+	global "UffizziCloud/uffizzi-go/internal/global"
 
 	"github.com/manifoldco/promptui"
 )
@@ -14,20 +15,20 @@ func Config() error {
 	fmt.Println(`Configure the default properties that will be used to authenticate with your
 	  Uffizzi API service and manage previews.\n`)
 	promt := promptui.Prompt{
-		Label:   "server",
-		Default: "https://app.uffizzi.com",
+		Label:   "host",
+		Default: global.Settings.DefaultHost,
 	}
 
-	server, err := promt.Run()
+	host, err := promt.Run()
 
 	if err != nil {
 		fmt.Printf("Config failed %v\n", err)
 		return err
 	}
 
-	configFile.SetOption("server", server)
+	configFile.SetOption("host", host)
 
-	fmt.Printf("The server is set as %q\n", server)
+	fmt.Printf("The host is set as %q\n", host)
 	fmt.Printf("To login, run: uffizzi login\n")
 	return nil
 }
@@ -47,7 +48,7 @@ func GetValue(option string) {
 	if value != nil {
 		fmt.Println(value)
 	}
-	fmt.Println(fmt.Sprintf("No such option: %s", option))
+	fmt.Println(fmt.Sprintf("No such option or no value set: %s", option))
 }
 
 func SetValue(option, value string) {

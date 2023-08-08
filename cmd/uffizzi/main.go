@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"UffizziCloud/uffizzi-cli/internal/commands/config"
+	"UffizziCloud/uffizzi-go/internal/commands/config"
 
 	"github.com/urfave/cli/v2"
 )
