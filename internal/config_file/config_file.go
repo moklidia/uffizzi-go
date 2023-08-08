@@ -42,6 +42,7 @@ func initializeConfig() {
 	v.SetConfigType("json")
 	v.AddConfigPath(configDir)
 	v.SetDefault("server", "https://app.uffizzi.com")
+	v.AllowEmptyEnv(true)
 	v.ReadInConfig()
 	ConfigReader = &viperConfigReader{
 		viper: v,
@@ -64,6 +65,15 @@ func ReadOption(option string) interface{} {
 func SetOption(option, value string) {
 	initializeConfig()
 	ConfigReader.viper.Set(option, value)
+	err := ConfigReader.viper.WriteConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func UnsetOption(option string) {
+	initializeConfig()
+	ConfigReader.viper.Set(option, "")
 	err := ConfigReader.viper.WriteConfig()
 	if err != nil {
 		log.Fatal(err)

@@ -55,3 +55,9 @@ func SetValue(option, value string) {
 
 	fmt.Println(fmt.Sprintf("The option '%s' was added with value '%s'", option, value))
 }
+
+func UnsetValue(option string) {
+	configFile.UnsetOption(option)
+
+	fmt.Println(fmt.Sprintf("The option '%s' was removed", option))
+}

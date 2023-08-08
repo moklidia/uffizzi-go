@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -59,7 +58,7 @@ func main() {
 					Name:  "unset",
 					Usage: "Deletes the value of the specified option.",
 					Action: func(cCtx *cli.Context) error {
-						fmt.Println("unsetset command called: ", cCtx.Args().First())
+						config.UnsetValue(cCtx.Args().First())
 						return nil
 					},
 				},
