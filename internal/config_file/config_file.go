@@ -32,7 +32,9 @@ func init() {
 	}
 	configDir := fmt.Sprintf("%s/uffizzi", homeDir)
 	configPath := fmt.Sprintf("%s/config.json", configDir)
+	configExists := true
 	if _, err := os.Stat(configPath); err != nil {
+		configExists = false
 		createConfigFile(configDir, configPath)
 	}
 
@@ -40,8 +42,10 @@ func init() {
 	v.SetConfigName("config")
 	v.SetConfigType("json")
 	v.AddConfigPath(configDir)
-	v.SetDefault("host", "https://app.uffizzi.com")
 	v.AllowEmptyEnv(true)
+	if !configExists {
+		v.WriteConfig()
+	}
 	v.ReadInConfig()
 	err = v.ReadInConfig()
 	if err != nil {
