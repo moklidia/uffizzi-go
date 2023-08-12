@@ -22,7 +22,7 @@ var ConfigCmd = &cobra.Command{
 	For more information on configuration options, see:
 	https://github.com/UffizziCloud/uffizzi_cli`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if args[0] == "help" {
+		if len(args) != 0 && args[0] == "help" {
 			cmd.Help()
 			return
 		}

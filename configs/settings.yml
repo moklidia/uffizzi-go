@@ -7,7 +7,6 @@ base: &base
 
 test:
   <<: *base
-  config_dir: uffizzi/test
 
 development:
   <<: *base
