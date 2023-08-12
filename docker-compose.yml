@@ -10,4 +10,6 @@ services:
       - ~/.ssh:/root/.ssh
       - ~/.bash_history:/root/.bash_history
       - ~/.config/uffizzi:/root/.config/uffizzi
+    environment:
+      ENV: development
     command: ["bash", "-c", "go run /app/cmd/uffizzi"]

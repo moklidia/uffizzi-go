@@ -1,6 +1,7 @@
 package configfile
 
 import (
+	"UffizziCloud/uffizzi-go/internal/global"
 	"fmt"
 	"log"
 	"os"
@@ -30,8 +31,9 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	configDir := fmt.Sprintf("%s/uffizzi", homeDir)
-	configPath := fmt.Sprintf("%s/config.json", configDir)
+
+	configDir := fmt.Sprintf("%s/%s", homeDir, global.Settings.ConfigFile.Dir)
+	configPath := fmt.Sprintf("%s/%s.%s", configDir, global.Settings.ConfigFile.Name, global.Settings.ConfigFile.Ext)
 	configExists := true
 	if _, err := os.Stat(configPath); err != nil {
 		configExists = false
@@ -39,8 +41,8 @@ func init() {
 	}
 
 	v := viper.New()
-	v.SetConfigName("config")
-	v.SetConfigType("json")
+	v.SetConfigName(global.Settings.ConfigFile.Name)
+	v.SetConfigType(global.Settings.ConfigFile.Ext)
 	v.AddConfigPath(configDir)
 	v.AllowEmptyEnv(true)
 	if !configExists {

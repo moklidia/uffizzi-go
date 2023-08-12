@@ -11,7 +11,7 @@ import (
 
 const callerOffset = 1
 
-func Read(path string) (*Settings, error) {
+func Read(env, path string) (*Settings, error) {
 	projectDir, err := os.Getwd()
 	if err != nil {
 		return nil, err
@@ -42,5 +42,5 @@ func Read(path string) (*Settings, error) {
 	if err != nil {
 		return nil, err
 	}
-	return settingsFile["settings"], nil
+	return settingsFile[env], nil
 }

@@ -1,2 +1,23 @@
-settings:
+base: &base
   default_host: https://app.uffizzi.com
+  config_file:
+    dir: uffizzi
+    name: config
+    ext: json
+
+test:
+  <<: *base
+  config_dir: uffizzi/test
+
+development:
+  <<: *base
+
+qa:
+  <<: *base
+
+staging:
+  <<: *base
+
+production:
+  <<: *base
+
